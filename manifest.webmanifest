@@ -1,0 +1,10 @@
+{
+  "name": "OliviAlarm",
+  "short_name": "OliviAlarm",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0f1631",
+  "theme_color": "#1d2550",
+  "lang": "nl",
+  "description": "Speelse nachtlamp met aftelklok voor Olivia"
+}

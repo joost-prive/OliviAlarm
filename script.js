@@ -18,6 +18,7 @@ const BRUSSELS_TIME_ZONE = "Europe/Brussels";
 const TARGET_TIME_STORAGE_KEY = "olivialarm-target-time";
 const ringRadius = Number(progressRing.getAttribute("r"));
 const ringCircumference = 2 * Math.PI * ringRadius;
+let fullscreenAttempted = false;
 
 progressRing.style.strokeDasharray = `${ringCircumference}`;
 progressRing.style.strokeDashoffset = "0";
@@ -129,9 +130,27 @@ function startCountdown() {
 }
 
 function showTimerAndStart() {
+  requestFullscreenIfPossible();
   lampButton.classList.add("is-hidden");
   timerScreen.classList.remove("is-hidden");
   startCountdown();
+}
+
+function requestFullscreenIfPossible() {
+  if (fullscreenAttempted) {
+    return;
+  }
+
+  fullscreenAttempted = true;
+
+  const documentElement = document.documentElement;
+  const requestMethod = documentElement.requestFullscreen || documentElement.webkitRequestFullscreen;
+
+  if (typeof requestMethod === "function") {
+    requestMethod.call(documentElement).catch(() => {
+      fullscreenAttempted = true;
+    });
+  }
 }
 
 function handleAdminSave(event) {
