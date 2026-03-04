@@ -1,10 +1,17 @@
 const startButton = document.getElementById("startButton");
 const countdownElement = document.getElementById("countdown");
+const progressRing = document.getElementById("progressRing");
 
 let timerId = null;
 let targetTimestamp = null;
+let countdownDurationMs = 0;
 
 const BRUSSELS_TIME_ZONE = "Europe/Brussels";
+const ringRadius = Number(progressRing.getAttribute("r"));
+const ringCircumference = 2 * Math.PI * ringRadius;
+
+progressRing.style.strokeDasharray = `${ringCircumference}`;
+progressRing.style.strokeDashoffset = "0";
 
 function getBrusselsNow() {
   const now = new Date();
@@ -48,19 +55,34 @@ function updateCountdown() {
   if (remaining <= 0) {
     countdownElement.textContent = "00:00:00";
     startButton.querySelector(".button-text").textContent = "OPNIEUW";
+    progressRing.style.strokeDashoffset = `${ringCircumference}`;
+
     if (timerId) {
       clearInterval(timerId);
       timerId = null;
     }
+
     return;
   }
 
+  const elapsedRatio = (countdownDurationMs - remaining) / countdownDurationMs;
+  const progressOffset = ringCircumference * Math.min(Math.max(elapsedRatio, 0), 1);
+
   countdownElement.textContent = formatDuration(remaining);
+  progressRing.style.strokeDashoffset = `${progressOffset}`;
 }
 
 function startCountdown() {
+  const brusselsNow = getBrusselsNow();
   targetTimestamp = getNextTargetInBrussels().getTime();
+  countdownDurationMs = targetTimestamp - brusselsNow.getTime();
+
+  if (countdownDurationMs <= 0) {
+    countdownDurationMs = 1;
+  }
+
   startButton.querySelector(".button-text").textContent = "LOOPT!";
+  progressRing.style.strokeDashoffset = "0";
   updateCountdown();
 
   if (timerId) {

@@ -11,14 +11,23 @@
       <h1 class="title">OliviAlarm</h1>
       <p class="subtitle">Druk op de grote knop en kijk hoe lang het nog duurt tot 06:30 🌙✨</p>
 
+      <section class="clock-card" aria-label="Aftelklok">
+        <div class="clock-wrap">
+          <svg class="clock-ring" viewBox="0 0 220 220" aria-hidden="true">
+            <circle class="ring-track" cx="110" cy="110" r="95"></circle>
+            <circle id="progressRing" class="ring-progress" cx="110" cy="110" r="95"></circle>
+          </svg>
+
+          <div class="clock-content">
+            <p class="alarm-label">⏰ 06:30</p>
+            <p id="countdown" class="countdown" role="status">00:00:00</p>
+          </div>
+        </div>
+      </section>
+
       <button id="startButton" class="big-button" type="button" aria-label="Start OliviAlarm">
         <span class="button-text">START</span>
       </button>
-
-      <section class="countdown-card">
-        <p class="countdown-label">Nog te slapen:</p>
-        <p id="countdown" class="countdown" role="status">00:00:00</p>
-      </section>
     </main>
 
     <script src="script.js"></script>

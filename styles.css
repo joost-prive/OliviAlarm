@@ -4,7 +4,8 @@
   --bg2: #e6f7ff;
   --pink: #ff6fae;
   --pink-dark: #ff4f99;
-  --yellow: #ffd86b;
+  --yellow: #ffb347;
+  --track: #f0d7c7;
   --text: #503047;
   --card: #ffffff;
 }
@@ -39,6 +40,55 @@ body {
   font-size: clamp(1rem, 3.5vw, 1.2rem);
 }
 
+.clock-card {
+  margin: 0.6rem auto 1.4rem;
+  width: min(84vw, 360px);
+}
+
+.clock-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.clock-ring {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.ring-track,
+.ring-progress {
+  fill: none;
+  stroke-width: 12;
+}
+
+.ring-track {
+  stroke: var(--track);
+}
+
+.ring-progress {
+  stroke: var(--yellow);
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 110px 110px;
+  transition: stroke-dashoffset 0.45s linear;
+}
+
+.clock-content {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+}
+
+.alarm-label {
+  margin: 0 0 0.45rem;
+  font-size: clamp(1rem, 3.8vw, 1.25rem);
+  font-weight: 700;
+}
+
 .big-button {
   width: min(72vw, 260px);
   aspect-ratio: 1;
@@ -64,21 +114,8 @@ body {
   box-shadow: 0 4px 0 #d43a7d;
 }
 
-.countdown-card {
-  margin: 1.8rem auto 0;
-  background: var(--card);
-  border-radius: 22px;
-  padding: 1rem 1.2rem;
-  border: 4px solid var(--yellow);
-}
-
-.countdown-label {
-  margin: 0;
-  font-size: 1rem;
-}
-
 .countdown {
-  margin: 0.3rem 0 0;
+  margin: 0;
   font-size: clamp(2rem, 10vw, 3.6rem);
   font-weight: 900;
   letter-spacing: 0.02em;
