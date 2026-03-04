@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OliviAlarm</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app" aria-live="polite">
+      <h1 class="title">OliviAlarm</h1>
+      <p class="subtitle">Druk op de grote knop en kijk hoe lang het nog duurt tot 06:30 🌙✨</p>
+
+      <button id="startButton" class="big-button" type="button" aria-label="Start OliviAlarm">
+        <span class="button-text">START</span>
+      </button>
+
+      <section class="countdown-card">
+        <p class="countdown-label">Nog te slapen:</p>
+        <p id="countdown" class="countdown" role="status">00:00:00</p>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
