@@ -3,6 +3,7 @@ const timerScreen = document.getElementById("timerScreen");
 const countdownElement = document.getElementById("countdown");
 const progressRing = document.getElementById("progressRing");
 const adminToggle = document.getElementById("adminToggle");
+const fullscreenButton = document.getElementById("fullscreenButton");
 const adminPanel = document.getElementById("adminPanel");
 const adminForm = document.getElementById("adminForm");
 const targetTimeInput = document.getElementById("targetTimeInput");
@@ -18,7 +19,6 @@ const BRUSSELS_TIME_ZONE = "Europe/Brussels";
 const TARGET_TIME_STORAGE_KEY = "olivialarm-target-time";
 const ringRadius = Number(progressRing.getAttribute("r"));
 const ringCircumference = 2 * Math.PI * ringRadius;
-let fullscreenAttempted = false;
 
 progressRing.style.strokeDasharray = `${ringCircumference}`;
 progressRing.style.strokeDashoffset = "0";
@@ -130,26 +130,25 @@ function startCountdown() {
 }
 
 function showTimerAndStart() {
-  requestFullscreenIfPossible();
   lampButton.classList.add("is-hidden");
   timerScreen.classList.remove("is-hidden");
   startCountdown();
 }
 
 function requestFullscreenIfPossible() {
-  if (fullscreenAttempted) {
+  if (document.fullscreenElement || document.webkitFullscreenElement) {
     return;
   }
-
-  fullscreenAttempted = true;
 
   const documentElement = document.documentElement;
   const requestMethod = documentElement.requestFullscreen || documentElement.webkitRequestFullscreen;
 
   if (typeof requestMethod === "function") {
-    requestMethod.call(documentElement).catch(() => {
-      fullscreenAttempted = true;
-    });
+    const maybePromise = requestMethod.call(documentElement);
+
+    if (maybePromise && typeof maybePromise.catch === "function") {
+      maybePromise.catch(() => {});
+    }
   }
 }
 
@@ -180,5 +179,6 @@ syncInputWithTargetTime();
 currentYear.textContent = String(new Date().getFullYear());
 
 lampButton.addEventListener("click", showTimerAndStart);
+fullscreenButton.addEventListener("click", requestFullscreenIfPossible);
 adminToggle.addEventListener("click", toggleAdminPanel);
 adminForm.addEventListener("submit", handleAdminSave);

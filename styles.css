@@ -45,6 +45,20 @@ body {
   cursor: pointer;
 }
 
+.fullscreen-toggle {
+  position: absolute;
+  top: -0.4rem;
+  left: 0;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  color: #f1f5ff;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
 .admin-panel {
   margin-top: 1rem;
   width: min(90vw, 320px);
