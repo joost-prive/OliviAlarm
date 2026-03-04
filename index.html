@@ -8,10 +8,26 @@
   </head>
   <body>
     <main class="app" aria-live="polite">
-      <h1 class="title">OliviAlarm</h1>
-      <p class="subtitle">Druk op de grote knop en kijk hoe lang het nog duurt tot 06:30 🌙✨</p>
+      <button id="adminToggle" class="admin-toggle" type="button" aria-label="Open admin">⚙</button>
 
-      <section class="clock-card" aria-label="Aftelklok">
+      <button id="lampButton" class="lamp-button" type="button" aria-label="Start timer">
+        <span class="lamp-shape" aria-hidden="true">
+          <span class="lamp-handle"></span>
+          <span class="lamp-top"></span>
+          <span class="lamp-glow"></span>
+          <span class="lamp-face">
+            <span class="eye eye-left"></span>
+            <span class="eye eye-right"></span>
+            <span class="smile"></span>
+          </span>
+          <span class="lamp-base"></span>
+          <span class="sparkle sparkle-1">★</span>
+          <span class="sparkle sparkle-2">★</span>
+          <span class="sparkle sparkle-3">★</span>
+        </span>
+      </button>
+
+      <section id="timerScreen" class="clock-card is-hidden" aria-label="Aftelklok">
         <div class="clock-wrap">
           <svg class="clock-ring" viewBox="0 0 220 220" aria-hidden="true">
             <circle class="ring-track" cx="110" cy="110" r="95"></circle>
@@ -19,16 +35,20 @@
           </svg>
 
           <div class="clock-content">
-            <p class="alarm-label">⏰ 06:30</p>
             <p id="countdown" class="countdown" role="status">00:00:00</p>
           </div>
         </div>
       </section>
 
-      <button id="startButton" class="big-button" type="button" aria-label="Start OliviAlarm">
-        <span class="button-text">START</span>
-      </button>
+      <section id="adminPanel" class="admin-panel is-hidden" aria-label="Admin instellingen">
+        <form id="adminForm" class="admin-form">
+          <input id="targetTimeInput" class="time-input" type="time" required />
+          <button class="save-button" type="submit">Opslaan</button>
+        </form>
+      </section>
     </main>
+
+    <footer class="app-footer">© <span id="currentYear"></span> ViaAventura</footer>
 
     <script src="script.js"></script>
   </body>

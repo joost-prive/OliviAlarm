@@ -1,13 +1,13 @@
 :root {
   color-scheme: light;
-  --bg1: #fff4f8;
-  --bg2: #e6f7ff;
-  --pink: #ff6fae;
-  --pink-dark: #ff4f99;
+  --bg1: #0f1631;
+  --bg2: #1d2550;
   --yellow: #ffb347;
-  --track: #f0d7c7;
-  --text: #503047;
-  --card: #ffffff;
+  --track: #455089;
+  --time: #f3f6ff;
+  --lamp-top: #ffd683;
+  --lamp-glow: #ffe7a8;
+  --lamp-base: #ffbc58;
 }
 
 * {
@@ -18,31 +18,73 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: "Trebuchet MS", "Segoe UI", sans-serif;
-  color: var(--text);
-  background: radial-gradient(circle at top, var(--bg2), var(--bg1));
+  background: radial-gradient(circle at top, #2e3875 0%, var(--bg2) 35%, var(--bg1) 100%);
   display: grid;
   place-items: center;
   padding: 1rem;
 }
 
 .app {
-  width: min(100%, 560px);
-  text-align: center;
+  width: min(100%, 420px);
+  display: grid;
+  justify-items: center;
+  position: relative;
 }
 
-.title {
-  margin: 0;
-  font-size: clamp(2rem, 6vw, 3.2rem);
+.admin-toggle {
+  position: absolute;
+  top: -0.4rem;
+  right: 0;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  color: #f1f5ff;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
-.subtitle {
-  margin: 0.6rem 0 1.4rem;
-  font-size: clamp(1rem, 3.5vw, 1.2rem);
+.admin-panel {
+  margin-top: 1rem;
+  width: min(90vw, 320px);
+  padding: 0.8rem;
+  border-radius: 16px;
+  background: rgba(19, 27, 59, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.admin-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.55rem;
+}
+
+.time-input,
+.save-button {
+  border: none;
+  border-radius: 12px;
+  min-height: 42px;
+  font-size: 1rem;
+}
+
+.time-input {
+  background: #f5f7ff;
+  color: #1f2a56;
+  padding: 0 0.75rem;
+}
+
+.save-button {
+  background: #ffb347;
+  color: #2e1b00;
+  padding: 0 0.9rem;
+  cursor: pointer;
+  font-weight: 700;
 }
 
 .clock-card {
-  margin: 0.6rem auto 1.4rem;
-  width: min(84vw, 360px);
+  margin: 0;
+  width: min(82vw, 340px);
 }
 
 .clock-wrap {
@@ -60,7 +102,7 @@ body {
 .ring-track,
 .ring-progress {
   fill: none;
-  stroke-width: 12;
+  stroke-width: 11;
 }
 
 .ring-track {
@@ -79,44 +121,163 @@ body {
   position: absolute;
   inset: 0;
   display: grid;
-  align-content: center;
+  place-items: center;
   justify-items: center;
-}
-
-.alarm-label {
-  margin: 0 0 0.45rem;
-  font-size: clamp(1rem, 3.8vw, 1.25rem);
-  font-weight: 700;
-}
-
-.big-button {
-  width: min(72vw, 260px);
-  aspect-ratio: 1;
-  border: none;
-  border-radius: 50%;
-  background: linear-gradient(160deg, var(--pink), var(--pink-dark));
-  box-shadow: 0 12px 0 #d43a7d, 0 16px 22px rgba(0, 0, 0, 0.16);
-  color: #fff;
-  font-size: clamp(1.3rem, 5vw, 2rem);
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
-}
-
-.big-button:hover,
-.big-button:focus-visible {
-  transform: translateY(-2px) scale(1.02);
-}
-
-.big-button:active {
-  transform: translateY(8px);
-  box-shadow: 0 4px 0 #d43a7d;
 }
 
 .countdown {
   margin: 0;
-  font-size: clamp(2rem, 10vw, 3.6rem);
-  font-weight: 900;
+  color: var(--time);
+  font-size: clamp(2.3rem, 12vw, 3.8rem);
+  font-weight: 300;
   letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.lamp-button {
+  width: min(82vw, 290px);
+  height: min(82vw, 290px);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform 0.15s ease;
+}
+
+.lamp-button:hover,
+.lamp-button:focus-visible {
+  transform: scale(1.03);
+}
+
+.lamp-button:active {
+  transform: scale(0.97);
+}
+
+.lamp-shape {
+  position: relative;
+  width: 82%;
+  height: 82%;
+  display: block;
+}
+
+.lamp-handle {
+  position: absolute;
+  left: 50%;
+  top: 8%;
+  transform: translateX(-50%);
+  width: 28%;
+  height: 10%;
+  border: 5px solid #ffd995;
+  border-bottom: none;
+  border-radius: 999px 999px 0 0;
+}
+
+.lamp-top {
+  position: absolute;
+  left: 50%;
+  top: 16%;
+  transform: translateX(-50%);
+  width: 64%;
+  height: 34%;
+  border-radius: 55% 55% 40% 40%;
+  background: var(--lamp-top);
+  box-shadow: inset 0 -8px 0 rgba(255, 187, 72, 0.55), 0 0 0 6px rgba(255, 255, 255, 0.07), 0 15px 25px rgba(0, 0, 0, 0.25);
+}
+
+.lamp-glow {
+  position: absolute;
+  left: 50%;
+  top: 31%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 46%;
+  border-radius: 0 0 56% 56%;
+  background: radial-gradient(circle at 50% 5%, #fff8d5 0%, var(--lamp-glow) 65%, #ffd476 100%);
+  box-shadow: 0 0 30px rgba(255, 227, 145, 0.55), inset 0 -8px 0 rgba(255, 198, 96, 0.45);
+}
+
+.lamp-face {
+  position: absolute;
+  left: 50%;
+  top: 49%;
+  transform: translateX(-50%);
+  width: 30%;
+  height: 20%;
+}
+
+.eye {
+  position: absolute;
+  top: 22%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #7b4c13;
+}
+
+.eye-left {
+  left: 16%;
+}
+
+.eye-right {
+  right: 16%;
+}
+
+.smile {
+  position: absolute;
+  left: 50%;
+  bottom: 12%;
+  transform: translateX(-50%);
+  width: 38%;
+  height: 12px;
+  border-bottom: 4px solid #7b4c13;
+  border-radius: 0 0 999px 999px;
+}
+
+.lamp-base {
+  position: absolute;
+  left: 50%;
+  bottom: 14%;
+  transform: translateX(-50%);
+  width: 30%;
+  height: 13%;
+  border-radius: 999px;
+  background: var(--lamp-base);
+  box-shadow: inset 0 -4px 0 rgba(221, 136, 19, 0.4), 0 8px 14px rgba(0, 0, 0, 0.32);
+}
+
+.sparkle {
+  position: absolute;
+  color: #ffe8a8;
+  font-size: 1.15rem;
+  text-shadow: 0 0 10px rgba(255, 232, 168, 0.8);
+}
+
+.sparkle-1 {
+  left: 6%;
+  top: 28%;
+}
+
+.sparkle-2 {
+  right: 5%;
+  top: 20%;
+}
+
+.sparkle-3 {
+  right: 10%;
+  top: 48%;
+}
+
+.is-hidden {
+  display: none;
+}
+
+.app-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0.7rem;
+  text-align: center;
+  color: rgba(236, 241, 255, 0.8);
+  font-size: 0.95rem;
 }
